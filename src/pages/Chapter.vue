@@ -17,12 +17,6 @@
                 v-swipedown="(e)=>vueTouch('down',e)"
                 v-swipeup="(e)=>vueTouch('up',e)"
 
-                @keyup.up="(e)=>vueTouch('up',e)"
-                @keyup.down="(e)=>vueTouch('down',e)"
-                @keyup.left="(e)=>vueTouch('left',e)"
-                @keyup.right="(e)=>vueTouch('right',e)"
-                @keyup.space="(e)=>vueTouch('next',e)"
-                
                 @callback="callback"
         ></reader>
 
@@ -83,7 +77,6 @@
                 this.loadNovel();
                 this.loadChapter(chapterNum)
             }
-
         },
         methods:{
             vueTouch(type){
@@ -99,10 +92,6 @@
                 }else if(type == 'up' && this.turnMode == 'vertical'){
                     this.pageGo(1)
                 }else if(type == 'down' && this.turnMode == 'vertical'){
-                    this.pageGo(-1)
-                }else if(type == 'next'){
-                    this.pageGo(1)
-                }else if(type == 'prev'){
                     this.pageGo(-1)
                 }
             },
@@ -126,6 +115,10 @@
                 }
                 if(key == 'pageNum'){
                     this.pageNum = val;
+                }
+                if(key == 'pageGo'){
+                    console.log("pageGo")
+                    this.pageGo(val)
                 }
                 if(key == 'chapterGo'){
                     this.turnDirection = ""
@@ -153,10 +146,10 @@
 
                 this.turnToLastPage = turnToLastPage;
                 this.loading = true;
+                this.pageNum = 0;   // 只有当pageNum发生改变时才会触发滚动动画，pageNum初始值为0，Reader加载完成后更新为1，触发动画
                 bookApi.getChapter(this.novelId, chapterNum).then(v => {
                     this.title = v.title;
                     this.text = v.text;
-                    this.pageNum = 0;           // 只有当pageNum发生改变时才会触发滚动动画，pageNum初始值为0，Reader加载完成后更新为1，触发动画
                     this.next = v.next;
                     this.prev = v.prev;
 

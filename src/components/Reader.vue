@@ -62,6 +62,25 @@
         mounted() {
             this.calc()
 
+            /*
+                keycode   37 = Left
+                keycode   38 = Up
+                keycode   39 = Right
+                keycode   40 = Down
+            * */
+            window.onkeydown = (e) => {
+                var key = (e || window.event).keyCode;
+
+                // 空格 右 下
+                if(key == 32 || key == 39 || key == 40){
+                    this.$emit('callback', 'pageGo', 1);
+                }
+                // 上 左
+                if(key == 37 || key == 38){
+                    this.$emit('callback', 'pageGo', -1);
+                }
+            }
+
             // window.onresize = () => {
             //     this.calc()
             //     this.$emit('callback', 'pageNum', 1);
