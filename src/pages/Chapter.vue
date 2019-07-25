@@ -85,15 +85,15 @@
                 if(!this.turnMode){
                     return
                 }
-                
+
                 if(type == 'left' && this.turnMode == 'horizontal'){
                     this.pageGo(-1)
                 }else if(type == 'right' && this.turnMode == 'horizontal'){
                     this.pageGo(1)
                 }else if(type == 'up' && this.turnMode == 'vertical'){
-                    this.pageGo(-1)
-                }else if(type == 'down' && this.turnMode == 'vertical'){
                     this.pageGo(1)
+                }else if(type == 'down' && this.turnMode == 'vertical'){
+                    this.pageGo(-1)
                 }
             },
             callback(key, val){

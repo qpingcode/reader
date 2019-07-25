@@ -15,6 +15,10 @@
 
 <style lang="scss">
     .loading-container{
+
+        .color-dark & .loading .path{
+            stroke:#888;
+        }
         width: 100vw;
         height: 100vh;
         .loading {
