@@ -17,6 +17,12 @@
                 v-swipedown="(e)=>vueTouch('down',e)"
                 v-swipeup="(e)=>vueTouch('up',e)"
 
+                @keyup.up="(e)=>vueTouch('up',e)"
+                @keyup.down="(e)=>vueTouch('down',e)"
+                @keyup.left="(e)=>vueTouch('left',e)"
+                @keyup.right="(e)=>vueTouch('right',e)"
+                @keyup.space="(e)=>vueTouch('next',e)"
+                
                 @callback="callback"
         ></reader>
 
@@ -93,6 +99,10 @@
                 }else if(type == 'up' && this.turnMode == 'vertical'){
                     this.pageGo(1)
                 }else if(type == 'down' && this.turnMode == 'vertical'){
+                    this.pageGo(-1)
+                }else if(type == 'next'){
+                    this.pageGo(1)
+                }else if(type == 'prev'){
                     this.pageGo(-1)
                 }
             },
