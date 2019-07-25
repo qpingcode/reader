@@ -1,5 +1,5 @@
 <template>
-    <div id="app" class="theme" :class="themeCss" @click="clickPage">
+    <div id="app" class="theme" :class="themeCss" @click="clickPage" >
         <Loading v-show="loading"></Loading>
 
         <reader v-if="!loading"
@@ -11,6 +11,12 @@
                 :line-height="lineHeight"
                 :font-size="fontSize"
                 :turn-to-last-page="turnToLastPage"
+
+                v-swipeleft="(e)=>vueTouch('left',e)"
+                v-swiperight="(e)=>vueTouch('right',e)"
+                v-swipedown="(e)=>vueTouch('down',e)"
+                v-swipeup="(e)=>vueTouch('up',e)"
+
                 @callback="callback"
         ></reader>
 
@@ -74,6 +80,22 @@
 
         },
         methods:{
+            vueTouch(type){
+
+                if(!this.turnMode){
+                    return
+                }
+                
+                if(type == 'left' && this.turnMode == 'horizontal'){
+                    this.pageGo(-1)
+                }else if(type == 'right' && this.turnMode == 'horizontal'){
+                    this.pageGo(1)
+                }else if(type == 'up' && this.turnMode == 'vertical'){
+                    this.pageGo(-1)
+                }else if(type == 'down' && this.turnMode == 'vertical'){
+                    this.pageGo(1)
+                }
+            },
             callback(key, val){
                 if(key == 'fontSizeInterval'){
                     this.fontSize += val;
@@ -203,11 +225,27 @@
                 }
             },
             getScreenPostionType: function(e){
-                var total = this.turnMode == 'vertical' ? document.documentElement.clientHeight : document.documentElement.clientWidth;
-                var current = this.turnMode == 'vertical' ? e.clientY : e.clientX;
-                var piece = total / 3;                      // 将屏幕分成3截
-                var splitTimes = Math.ceil(current / piece);
-                return splitTimes;
+                var clientHeight = document.documentElement.clientHeight;
+                var clientWidth =  document.documentElement.clientWidth;
+
+                var clientY = e.clientY;
+                var clientX = e.clientX;
+
+                var y = Math.ceil(clientY / (clientHeight / 3));
+                var x = Math.ceil(clientX / (clientWidth / 3))
+
+                // 判断是否是下一页
+                if(y == 3 || (y == 2 && x == 3)){
+                    return 3;
+                }
+                // 判断是否是点击设置
+                else if(y == 2 && x == 2){
+                    return 2;
+                }
+                // 判断是否上一页
+                else{
+                    return 1;
+                }
             }
         }
 
