@@ -20,6 +20,13 @@
                 @callback="callback"
         ></reader>
 
+        <div class="book-btn left" @click="pageGo(-1)">
+            <i class="iconfont book-prev"></i>
+        </div>
+        <div class="book-btn right" @click="pageGo(1)">
+            <i class="iconfont book-next"></i>
+        </div>
+
         <toolbar v-if="showToolbar"
                  :themeCss="themeCss"
                  :turnMode="turnMode"
@@ -28,7 +35,7 @@
 
         <table-of-content v-if="showToc"
                           :titleList="titleList"
-                          @chapterTo="chapterTo"
+                          @chapterJump="chapterJump"
         ></table-of-content>
     </div>
 </template>
@@ -117,7 +124,6 @@
                     this.pageNum = val;
                 }
                 if(key == 'pageGo'){
-                    console.log("pageGo")
                     this.pageGo(val)
                 }
                 if(key == 'chapterGo'){
@@ -161,7 +167,7 @@
                     this.loading = false
                 })
             },
-            chapterTo(chapterNum){
+            chapterJump(chapterNum){
                 this.turnDirection = ""
                 this.showToc = false
                 this.showToolbar = false
@@ -261,5 +267,33 @@
         padding: 0;
     }
     #app {
+        .book-btn{
+            position: absolute;
+            width:100px;
+            height:100px;
+            line-height:100px;
+            text-align:center;
+            top:50%;
+            z-index: 999;
+            .iconfont{
+                font-size:50px;
+            }
+        }
+
+        .left{
+            left:20px;
+        }
+
+        .right{
+            right:20px;
+        }
+
+        @media screen and (max-width: 960px) {
+            .book-btn{
+                display:none;
+            }
+        }
+
+
     }
 </style>

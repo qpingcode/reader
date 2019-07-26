@@ -43,7 +43,7 @@
                 this.titleList.reverse();
             },
             clickChapter(chapterNum){
-                this.$emit('chapterTo', chapterNum);
+                this.$emit('chapterJump', chapterNum);
             },
         },
     }
