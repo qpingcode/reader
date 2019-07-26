@@ -103,6 +103,10 @@
                 }
             },
             callback(key, val){
+                if(key == "showBookInfo"){
+                    this.$router.push("/novel/" + this.novelId)
+                    return
+                }
                 if(key == 'fontSizeInterval'){
                     this.fontSize += val;
                     this.lineHeight += val;

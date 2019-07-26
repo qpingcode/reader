@@ -101,7 +101,7 @@
                 this.$emit("callback", "chapterGo", arrow);
             },
             showBookInfo(){
-                //todo
+                this.$emit("callback", "showBookInfo");
             },
             showToc(){
                 this.$emit("callback", "showToc", true);
