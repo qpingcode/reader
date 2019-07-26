@@ -11,8 +11,8 @@
                 <i class="iconfont book-sort"></i> 倒序
             </div>
         </div>
-        <div class="directory" :style="{'height': listHeight + 'px'}">
-            <div v-for="(item) in titleList" :key="item.num" class="row" @click="clickChapter(item.num)">
+        <div id="directory" class="directory" :style="{'height': listHeight + 'px'}">
+            <div v-for="(item) in titleList" :key="item.num" :style="chapterNum == item.num ? 'color:red': ''" class="row" @click="clickChapter(item.num)">
                 {{item.title}}
             </div>
         </div>
@@ -23,7 +23,7 @@
 <script>
     export default {
         name: 'TableOfContent',
-        props: ['titleList'],
+        props: ['chapterNum', 'titleList'],
         data(){
             return {
                 clientHeight: null,
@@ -37,8 +37,15 @@
             this.clienWidth = global.document.documentElement.clientWidth - 20;
             this.listHeight = this.clientHeight - 50;
             this.listWidth = 400;
+            this.scrollToChapterNum()
+        },
+        updated(){
+          this.scrollToChapterNum()
         },
         methods:{
+            scrollToChapterNum(){
+                document.getElementById("directory").scrollTop = (this.chapterNum - 1) * 54
+            },
             sort(){
                 this.titleList.reverse();
             },

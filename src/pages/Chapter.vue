@@ -35,6 +35,7 @@
 
         <table-of-content v-if="showToc"
                           :titleList="titleList"
+                          :chapterNum="chapterNum"
                           @chapterJump="chapterJump"
         ></table-of-content>
     </div>
@@ -62,7 +63,8 @@
               turnDirection: "",
               /* --------------- chapter ---------------- */
               titleList:[],
-              novelId: 1,
+              novelId: -1,
+              chapterNum: 1,
               pageNum: 1,
               pageTotal: 0,
               title: "",
@@ -162,8 +164,12 @@
                     this.text = v.text;
                     this.next = v.next;
                     this.prev = v.prev;
+                    this.chapterNum = chapterNum;
 
                     this.loading = false
+
+                    // 跳转章节后同步修改浏览器地址栏
+                    history.replaceState({}, null, "/novel/" + this.novelId + "/chapter/" + this.chapterNum);
 
                 }).catch(ex => {
                     alert(ex)
