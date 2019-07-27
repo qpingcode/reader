@@ -1,5 +1,5 @@
 <template>
-    <div id="app" class="theme" :class="themeCss" @click="clickPage" >
+    <div id="chapter" class="theme" :class="themeCss" @click="clickPage" >
         <Loading v-show="loading"></Loading>
 
         <reader v-if="!loading"
@@ -50,7 +50,7 @@
 
 
     export default {
-        name: 'app',
+        name: 'Chapter',
         components: {
             Loading,Reader,Toolbar,TableOfContent
         },
@@ -73,6 +73,7 @@
               prev: null,
               turnToLastPage: false,
               /* --------------- setting ---------------- */
+              fontSizeInterval: 0,
               lineHeight: 30,
               fontSize: 16,
               themeCss: 'color-white'
@@ -81,13 +82,38 @@
         created(){
             if(this.$route.params){
                 this.novelId = this.$route.params.novelId;
-                var chapterNum = this.$route.params.chapterNum;
-
                 this.loadNovel();
+
+                var chapterNum = this.$route.params.chapterNum;
                 this.loadChapter(chapterNum)
             }
+
+            this.loadSetting()
+
         },
         methods:{
+            loadSetting(){
+
+                // 字体大小
+                var fontSizeInterval = bookApi.getSetting("fontSizeInterval");
+                if(fontSizeInterval){
+                    var i = parseInt(fontSizeInterval)
+                    this.fontSize += i;
+                    this.lineHeight += i;
+                    this.fontSizeInterval = i;
+                }
+
+                var themeCss =  bookApi.getSetting("themeCss")
+                if(themeCss){
+                    this.themeCss = themeCss;
+                }
+
+                var turnMode =  bookApi.getSetting("turnMode")
+                if(turnMode){
+                    this.turnMode = turnMode;
+                }
+
+            },
             vueTouch(type){
 
                 if(!this.turnMode){
@@ -112,11 +138,15 @@
                 if(key == 'fontSizeInterval'){
                     this.fontSize += val;
                     this.lineHeight += val;
+                    this.fontSizeInterval += val;
+                    bookApi.saveSetting("fontSizeInterval", this.fontSizeInterval)
                 }
                 if(key == 'themeCss'){
                     this.themeCss = val;
+                    bookApi.saveSetting("themeCss", val)
                 }
                 if(key == 'turnMode'){
+                    bookApi.saveSetting("turnMode", val)
                     this.turnMode = val
                 }
                 if(key == 'showToc'){
@@ -128,6 +158,7 @@
                 }
                 if(key == 'pageNum'){
                     this.pageNum = val;
+                    bookApi.saveSetting("pageNum", this.novelId, this.pageNum)
                 }
                 if(key == 'pageGo'){
                     this.pageGo(val)
@@ -168,6 +199,7 @@
 
                     this.loading = false
 
+                    bookApi.saveSetting("chapterNum", this.novelId, chapterNum)
                     // 跳转章节后同步修改浏览器地址栏
                     history.replaceState({}, null, "/novel/" + this.novelId + "/chapter/" + this.chapterNum);
 
@@ -212,6 +244,7 @@
                 }
 
                 this.pageNum += arrow
+                bookApi.saveSetting("pageNum", this.novelId, this.pageNum)
             },
             clickPage: function (e) {
                 if(this.loading){
@@ -276,7 +309,14 @@
         margin: 0;
         padding: 0;
     }
-    #app {
+    #chapter {
+
+        @media screen and (max-width: 960px) {
+            .book-btn{
+                display:none;
+            }
+        }
+
         .book-btn{
             position: absolute;
             width:100px;
@@ -297,13 +337,5 @@
         .right{
             right:20px;
         }
-
-        @media screen and (max-width: 960px) {
-            .book-btn{
-                display:none;
-            }
-        }
-
-
     }
 </style>

@@ -5,7 +5,6 @@
 </template>
 
 <script>
-
     export default {
         name: 'home',
         components: {
@@ -14,15 +13,8 @@
 </script>
 
 
-<style>
-    body, html {
-        padding: 0;
-        margin: 0;
-    }
-
-    body{
-    }
-
+<style lang="scss">
+    @import "assets/css/common.scss";
     #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;

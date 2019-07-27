@@ -1,38 +1,46 @@
 <template>
-    <div class="novel-index">
+    <div class="novel-index site-background">
+        <SiteHeader></SiteHeader>
         <Loading v-show="loading"></Loading>
 
-        <div class="container" v-if="!loading">
+        <div class="site-center-wrappter mt20" v-if="!loading">
             <div class="title"> {{novel.title}}</div>
             <div class="author"> 作者：{{novel.author}}</div>
             <div class="intro"> 简介：{{novel.intro}}</div>
+            <div v-if="chapterNum > 0" class="continue">
+                <router-link :to="{path: '/novel/' + novel.id + '/chapter/' + chapterNum}">
+                    点击这里继续阅读...
+                </router-link>
+            </div>
             <div class="sort" @click.stop="sort">
                 <i class="iconfont book-sort"></i> 倒序
             </div>
             <div class="directory">
                 <ul>
                     <li v-for="item in novel.chapters" :key="item.num">
-                        <router-link :to="'/novel/' + novel.id + '/chapter/' + item.num">{{item.title}}</router-link>
+                        <router-link :to="{path : '/novel/' + novel.id + '/chapter/' + item.num}">{{item.title}}</router-link>
                     </li>
                 </ul>
             </div>
         </div>
-
     </div>
 </template>
 
 <script>
     import bookApi from '../api/book.js'
     import Loading from '../components/Loading.vue'
+    import SiteHeader from '../components/SiteHeader.vue'
 
     export default {
         name: 'Novel',
-        components: {Loading},
+        components: {Loading, SiteHeader},
         data() {
             return {
                 loading: true,
                 novel: {
-                    chapters: []
+                    chapters: [],
+                    chapterNum: -1,
+                    pageNum: 1
                 }
             }
         },
@@ -46,6 +54,15 @@
                     alert(v)
                     this.loading =false
                 })
+
+                var chapterNum =  bookApi.getSetting("chapterNum", novelId)
+                if(chapterNum){
+                    this.chapterNum = parseInt(chapterNum);
+                }
+                // var pageNum = bookApi.getSetting("pageNum", novelId)
+                // if(pageNum){
+                //     this.pageNum = parseInt(pageNum)
+                // }
             }
         },
         mounted() {
@@ -64,14 +81,16 @@
 
 <style lang="scss">
     .novel-index {
-        margin: 0;
-        background-color: #fefff7;
+
+        .mt20{
+            margin-top: 20px;
+        }
         color: #333;
-        padding: 20px;
 
         .sort{
-            padding:20px 0;
+            padding:10px 0;
             border-bottom:1px solid #aaa;
+            margin-bottom: 10px;
         }
 
         ul, li {
@@ -99,10 +118,12 @@
             height:30px;
             line-height:30px;
         }
+
+
         .directory ul li a{
             display: inline-block;
-            height: 20px;
-            line-height: 20px;
+            height: 25px;
+            line-height: 25px;
 
             width:100%;
             overflow: hidden;
@@ -110,6 +131,13 @@
 
             word-wrap: break-word;
             white-space: nowrap ;
+        }
+
+        .continue{
+            margin:10px 0;
+            a{
+                color:#FF5151;
+            }
         }
     }
 </style>
