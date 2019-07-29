@@ -16,7 +16,7 @@
                 <ul>
                     <li :key="item.id" v-for="item in novelList.rows">
                         <div class="novel">
-                            <a :href="'/novel/' + item.id">
+                            <a @click="clickNovel(item.id)">
                                 <div class="title">
                                     {{item.title}}
                                 </div>
@@ -66,7 +66,14 @@
 
         },
         methods: {
-
+            clickNovel(novelId){
+                let chapterNum = bookApi.getSetting("chapterNum", novelId)
+                if(chapterNum){
+                    this.$router.push("/novel/" + novelId + "/chapter/" + chapterNum)
+                }else{
+                    this.$router.push("/novel/" + novelId)
+                }
+            }
         }
     }
 
