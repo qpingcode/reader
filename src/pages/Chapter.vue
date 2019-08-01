@@ -201,7 +201,7 @@
 
                     bookApi.saveSetting("chapterNum", this.novelId, chapterNum)
                     // 跳转章节后同步修改浏览器地址栏
-                    history.replaceState({}, null, "/novel/" + this.novelId + "/chapter/" + this.chapterNum);
+                    history.replaceState({}, null, process.env.VUE_APP_BASE_URL + "/novel/" + this.novelId + "/chapter/" + this.chapterNum);
 
                 }).catch(ex => {
                     alert(ex)
