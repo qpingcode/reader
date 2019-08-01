@@ -1,62 +1,72 @@
 <template>
-    <div class="toolbar" @click.stop>
-        <div class="wrapper">
-            <div class="options">
-                <div v-show="tab == 'default'" class="option">
-                    <div class="row flex">
-                        <div class="btn font-btn" @click="clickChapterGo(-1)">上一章</div>
-                        <div class="btn font-btn" @click="clickChapterGo(1)">下一章</div>
-                    </div>
-                </div>
-                <div v-show="tab == 'setting'" class="option">
-                    <div class="title">字体大小</div>
-                    <div class="row flex">
-                        <div class="btn font-btn" @click="fontChange(-1)">A -</div>
-                        <div class="btn font-btn" @click="fontChange(1)">A +</div>
-                    </div>
-                    <div class="title">主题颜色</div>
-                    <div class="row flex">
-                        <div class="btn color-btn color-white" @click="themeColorChange('color-white')"></div>
-                        <div class="btn color-btn color-yellow" @click="themeColorChange('color-yellow')"></div>
-                        <div class="btn color-btn color-green" @click="themeColorChange('color-green')"></div>
-                    </div>
-                    <div class="title">翻页效果</div>
-                    <div class="row flex">
-                        <div class="turn" :class="turnMode == '' ? 'active' : ''">
-                            <i class="iconfont book-turn-default" @click="turnModeChange('')"></i>
-                        </div>
-                        <div class="turn" :class="turnMode == 'horizontal' ? 'active' : ''">
-                            <i class="iconfont book-turn-horizontal" @click="turnModeChange('horizontal')"></i>
-                        </div>
-                        <div class="turn" :class="turnMode == 'vertical' ? 'active' : ''">
-                            <i class="iconfont book-turn-vertical" @click="turnModeChange('vertical')"></i>
-                        </div>
-                    </div>
-                </div>
+    <div>
+        <div class="toolbar-back">
+            <div class="back-btn" @click.stop="goIndex">
+                <i class="iconfont book-prev"></i>
+                返回首页
             </div>
-            <ul class="flex">
-                <li @click="showTab('setting')">
-                    <span class="icon"><i class="iconfont book-font"></i></span>
-                    <span class="icon-info">设置</span>
-                </li>
-                <li v-show="themeCss != 'color-dark'" @click="themeColorChange('color-dark')" >
-                    <span class="icon"><i class="iconfont book-moon"></i></span>
-                    <span class="icon-info">夜间</span>
-                </li>
-                <li v-show="themeCss == 'color-dark'" @click="themeColorChange('color-white')" >
-                    <span class="icon"><i class="iconfont book-sun"></i></span>
-                    <span class="icon-info">日间</span>
-                </li>
-                <li @click="showToc">
-                    <span class="icon"><i class="iconfont book-toc"></i></span>
-                    <span class="icon-info">目录</span>
-                </li>
-                <li @click="showBookInfo">
-                    <span class="icon"><i class="iconfont book-info1"></i></span>
-                    <span class="icon-info">书籍详情</span>
-                </li>
-            </ul>
         </div>
+
+        <div class="toolbar" @click.stop>
+            <div class="wrapper">
+                <div class="options">
+                    <div v-show="tab == 'default'" class="option">
+                        <div class="row flex">
+                            <div class="btn font-btn" @click="clickChapterGo(-1)">上一章</div>
+                            <div class="btn font-btn" @click="clickChapterGo(1)">下一章</div>
+                        </div>
+                    </div>
+                    <div v-show="tab == 'setting'" class="option">
+                        <div class="title">字体大小</div>
+                        <div class="row flex">
+                            <div class="btn font-btn" @click="fontChange(-1)">A -</div>
+                            <div class="btn font-btn" @click="fontChange(1)">A +</div>
+                        </div>
+                        <div class="title">主题颜色</div>
+                        <div class="row flex">
+                            <div class="btn color-btn color-white" @click="themeColorChange('color-white')"></div>
+                            <div class="btn color-btn color-yellow" @click="themeColorChange('color-yellow')"></div>
+                            <div class="btn color-btn color-green" @click="themeColorChange('color-green')"></div>
+                        </div>
+                        <div class="title">翻页效果</div>
+                        <div class="row flex">
+                            <div class="turn" :class="turnMode == '' ? 'active' : ''">
+                                <i class="iconfont book-turn-default" @click="turnModeChange('')"></i>
+                            </div>
+                            <div class="turn" :class="turnMode == 'horizontal' ? 'active' : ''">
+                                <i class="iconfont book-turn-horizontal" @click="turnModeChange('horizontal')"></i>
+                            </div>
+                            <div class="turn" :class="turnMode == 'vertical' ? 'active' : ''">
+                                <i class="iconfont book-turn-vertical" @click="turnModeChange('vertical')"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="flex">
+                    <li @click="showTab('setting')">
+                        <span class="icon"><i class="iconfont book-font"></i></span>
+                        <span class="icon-info">设置</span>
+                    </li>
+                    <li v-show="themeCss != 'color-dark'" @click="themeColorChange('color-dark')" >
+                        <span class="icon"><i class="iconfont book-moon"></i></span>
+                        <span class="icon-info">夜间</span>
+                    </li>
+                    <li v-show="themeCss == 'color-dark'" @click="themeColorChange('color-white')" >
+                        <span class="icon"><i class="iconfont book-sun"></i></span>
+                        <span class="icon-info">日间</span>
+                    </li>
+                    <li @click="showToc">
+                        <span class="icon"><i class="iconfont book-toc"></i></span>
+                        <span class="icon-info">目录</span>
+                    </li>
+                    <li @click="showBookInfo">
+                        <span class="icon"><i class="iconfont book-info1"></i></span>
+                        <span class="icon-info">书籍详情</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -97,6 +107,9 @@
 
         },
         methods:{
+            goIndex(){
+                this.$router.push("/")
+            },
             clickChapterGo(arrow){
                 this.$emit("callback", "chapterGo", arrow);
             },
@@ -130,6 +143,21 @@
     $bg-green: url(../assets/theme/green.png) repeat;
     $bg-dark: #333;
     /** 定义主题颜色 end **/
+
+    .toolbar-back{
+        height:40px;
+        background: $bg-white;
+        width:100%;
+        display: block;
+        top: 0;
+        left: 0;
+        position: fixed;
+
+        .back-btn{
+            padding:10px 10px;
+        }
+
+    }
 
     .toolbar{
         background: $bg-white;
@@ -266,6 +294,11 @@
             background-color: #fefff7;
             box-shadow: 0 -3px 15px 0 rgba(0,0,0,.1);
         }
+
+        & .toolbar-back{
+            background-color: #fefff7;
+            box-shadow: 0 -3px 15px 0 rgba(0,0,0,.1);
+        }
         color: #333;
     }
 
@@ -288,6 +321,10 @@
         background-color:$bg-dark;
         color:#bbb;
         .toolbar{
+            background-color:#555;
+            box-shadow: none;
+        }
+        .toolbar-back{
             background-color:#555;
             box-shadow: none;
         }

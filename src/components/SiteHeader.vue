@@ -3,7 +3,7 @@
         <div class="site-center-wrappter flex-row-space-between">
             <div class="menu-container">
                 <ul class="menu">
-                    <a href="/">
+                    <a href="javascript:void(0)" @click="goIndex">
                         <li class="menu-item">首页</li>
                     </a>
                 </ul>
@@ -13,7 +13,15 @@
     </div>
 </template>
 
-
+<script>
+    export default {
+        methods:{
+            goIndex(){
+                this.$router.push("/")
+            }
+        }
+    }
+</script>
 <style lang="scss">
     .site-header{
         height:35px;
