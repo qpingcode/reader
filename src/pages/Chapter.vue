@@ -91,6 +91,9 @@
             this.loadSetting()
 
         },
+        mounted(){
+          window.scrollTop = 0
+        },
         methods:{
             loadSetting(){
 
