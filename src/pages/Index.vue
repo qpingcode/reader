@@ -58,7 +58,9 @@
             }
         },
         created(){
-            bookApi.getNovels(1).then(v =>{
+            var show = this.$route.query.show;
+
+            bookApi.getNovels(1, null, show).then(v =>{
                 this.novelList = v;
             })
         },

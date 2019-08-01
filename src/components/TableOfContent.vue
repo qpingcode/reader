@@ -12,7 +12,7 @@
             </div>
         </div>
         <div id="directory" class="directory" :style="{'height': listHeight + 'px'}">
-            <div v-for="(item) in titleList" :key="item.num" :style="chapterNum == item.num ? 'color:red': ''" class="row" @click="clickChapter(item.num)">
+            <div v-for="(item) in titleList" :key="item.num" :class="chapterNum == item.num ? 'active': ''" class="row" @click="clickChapter(item.num)">
                 {{item.title}}
             </div>
         </div>
@@ -105,6 +105,10 @@
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
+            }
+
+            .active{
+                color:#FF5151;
             }
         }
     }
