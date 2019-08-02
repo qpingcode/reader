@@ -54,10 +54,13 @@
                 rendering: false
             }
         },
-        watch:{
-          lineHeight(){
-              this.calc()
-          }
+        watch: {
+            lineHeight() {
+                this.calc()
+            },
+            turnMode() {
+                this.calc()
+            }
         },
         mounted() {
             this.calc()
