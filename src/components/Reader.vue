@@ -96,10 +96,30 @@
                 this.$emit('callback', 'chapterGo', arrow);
             },
             clientSize() {
-                return {
-                    height: global.document.documentElement.clientHeight,
-                    width: global.document.documentElement.clientWidth
+
+                var pageWidth = window.innerWidth;
+                var pageHeight = window.innerHeight;
+
+                if (typeof pageWidth != "number") {
+                    //在标准模式下面
+                    if (document.compatMode == "CSS1Compat" ) {
+                        pageWidth = document.documentElement.clientWidth;
+                        pageHeight = document.documentElement.clientHeight;
+                    } else {
+                        pageWidth = document.body.clientWidth;
+                        pageHeight = window.body.clientHeight;
+                    }
                 }
+
+                return {
+                    width: pageWidth,
+                    height: pageHeight
+                }
+
+                // return {
+                //     height: global.document.documentElement.clientHeight,
+                //     width: global.document.documentElement.clientWidth
+                // }
             },
             calc() {
                 if (!this.turnMode) {
@@ -112,6 +132,7 @@
                         var top_bottom = 60;
                         // 每页行数
                         this.clientHeight = this.clientSize().height;
+
                         // 页面高度 - 顶部状态栏高度 - 底部页码栏高度
                         this.pageHeight = this.clientHeight - top_bottom;
                         this.pageLines = Math.floor(this.pageHeight / this.lineHeight);

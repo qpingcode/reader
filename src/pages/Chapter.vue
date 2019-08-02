@@ -92,7 +92,6 @@
 
         },
         mounted(){
-          window.scrollTop = 0
         },
         methods:{
             loadSetting(){
@@ -204,7 +203,9 @@
 
                     bookApi.saveSetting("chapterNum", this.novelId, chapterNum)
                     // 跳转章节后同步修改浏览器地址栏
-                    history.replaceState({}, null, process.env.VUE_APP_BASE_URL + "/novel/" + this.novelId + "/chapter/" + this.chapterNum);
+
+                    var pre = process.env.VUE_APP_BASE_URL ? process.env.VUE_APP_BASE_URL : "";
+                    history.replaceState({}, null, pre + "/novel/" + this.novelId + "/chapter/" + this.chapterNum);
 
                 }).catch(ex => {
                     alert(ex)
