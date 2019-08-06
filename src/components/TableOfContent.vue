@@ -74,7 +74,7 @@
 
         top:0;
         left:0;
-        position: absolute;
+        position: fixed;
         background:$bg-white;
         box-shadow: 0 -3px 15px 0 rgba(0,0,0,.1);
         .color-dark &{
