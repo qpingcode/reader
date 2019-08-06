@@ -1,6 +1,6 @@
 # reader
 
-## 安装与使用 Project setup and use 
+## 安装与使用
 ```
 // 安装依赖 
 npm install
@@ -13,9 +13,8 @@ npm run build-prod
 
 ```
 
-## 配置文件所在地址 where is config.js
-配置文件路径为: /src/config/config.js
-config.js 中使用了 process.env.VUE_APP_BASE_URL 变量，这个变量定义在 .env.prod 中，用于区分环境的差异
+## 配置文件
+配置文件路径为: /src/config/config.js，其中使用了 process.env.VUE_APP_BASE_URL 变量，用于区分环境的差异，这个变量定义在 .env.prod 中
 
 
 ## 百度统计
