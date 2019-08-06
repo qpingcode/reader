@@ -24,16 +24,9 @@ npm run build-prod
 import ba from 'vue-ba'
 Vue.use(ba, '764983231767f686c84e1180cd32e85b')  // 此处可改为你自己的百度统计SiteId
 ```
-* Index.vue / Novel.vue 增加代码
+* Index.vue / Novel.vue / Chapter.vue 增加代码
 ```js
  this.$ba.trackPageview(chapterURL)
-```
-* Chapter.vue reader组件上增加代码
-```html
-<reader ... 
-    v-track-pageview="'/novel/' + novelId + '/chapter/' + chapterNum"
-    >
-</reader>
 ```
 
 # 更新日志
