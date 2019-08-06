@@ -18,7 +18,7 @@
                         <div class="novel">
                             <a @click="clickNovel(item.id)">
                                 <div class="title">
-                                    {{item.title}}
+                                    {{item.title}} <i v-if="isUpdated(item.id, item.latestChapterNum)" class="iconfont book-xin new"></i>
                                 </div>
                                 <div class="author"> {{item.author}} </div>
                                 <div class="intro"> {{item.intro}} </div>
@@ -68,6 +68,11 @@
             this.$ba.trackPageview(pre + "/")
         },
         methods: {
+            isUpdated(novelId, lastest){
+                let chapterNum = bookApi.getSetting("chapterNum", novelId)
+                if(!chapterNum || !lastest) return false;
+                return lastest > chapterNum ;
+            },
             clickNovel(novelId){
                 let chapterNum = bookApi.getSetting("chapterNum", novelId)
 
@@ -84,9 +89,15 @@
 
 <style lang="scss">
     .site-index {
+
         a {
             text-decoration: none;
             color: #333;
+        }
+        .new{
+            color:orangered;
+            font-size: 18px;
+            font-weight: normal
         }
 
         .search{
