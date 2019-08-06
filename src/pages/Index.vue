@@ -117,7 +117,7 @@
             li{
                 margin-top:20px;
                 margin-right:20px;
-                width:140px;
+                width:240px;
                 display: inline-block;
             }
 
@@ -141,7 +141,7 @@
         .novel{
             padding:12px;
             background-color: white;
-            border:1px solid #aaa;
+            border:1px solid #ccc;
             .author,.title{
                 white-space:nowrap;
                 overflow: hidden;

@@ -32,9 +32,10 @@
                 listWidth: null,
             }
         },
+
         mounted(){
-            this.clientHeight = global.document.documentElement.clientHeight;
-            this.clienWidth = global.document.documentElement.clientWidth - 20;
+            this.clientHeight = this.clientSize().height;
+            this.clienWidth = this.clientSize().width - 20;
             this.listHeight = this.clientHeight - 50;
             this.listWidth = 400;
             this.scrollToChapterNum()
@@ -43,6 +44,32 @@
           this.scrollToChapterNum()
         },
         methods:{
+            clientSize() {
+
+                var pageWidth = window.innerWidth;
+                var pageHeight = window.innerHeight;
+
+                if (typeof pageWidth != "number") {
+                    //在标准模式下面
+                    if (document.compatMode == "CSS1Compat" ) {
+                        pageWidth = document.documentElement.clientWidth;
+                        pageHeight = document.documentElement.clientHeight;
+                    } else {
+                        pageWidth = document.body.clientWidth;
+                        pageHeight = window.body.clientHeight;
+                    }
+                }
+
+                return {
+                    width: pageWidth,
+                    height: pageHeight
+                }
+
+                // return {
+                //     height: global.document.documentElement.clientHeight,
+                //     width: global.document.documentElement.clientWidth
+                // }
+            },
             scrollToChapterNum(){
                 document.getElementById("directory").scrollTop = (this.chapterNum - 1) * 54
             },
