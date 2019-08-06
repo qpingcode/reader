@@ -3,6 +3,7 @@
         <Loading v-show="loading"></Loading>
 
         <reader v-if="!loading"
+
                 :title="title"
                 :content="text"
                 :page-num="pageNum"
@@ -202,10 +203,14 @@
                     this.loading = false
 
                     bookApi.saveSetting("chapterNum", this.novelId, chapterNum)
-                    // 跳转章节后同步修改浏览器地址栏
 
+                    // 跳转章节后同步修改浏览器地址栏
                     var pre = process.env.VUE_APP_BASE_URL ? process.env.VUE_APP_BASE_URL : "";
-                    history.replaceState({}, null, pre + "/novel/" + this.novelId + "/chapter/" + this.chapterNum);
+                    var chapterURL = pre + "/novel/" + this.novelId + "/chapter/" + this.chapterNum;
+                    history.replaceState({}, null, chapterURL);
+
+                    // 增加百度统计
+                    this.$ba.trackPageview(chapterURL)
 
                 }).catch(ex => {
                     alert(ex)

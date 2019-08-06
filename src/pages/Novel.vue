@@ -7,10 +7,8 @@
             <div class="title"> {{novel.title}}</div>
             <div class="author"> 作者：{{novel.author}}</div>
             <div class="intro"> 简介：{{novel.intro}}</div>
-            <div v-if="chapterNum > 0" class="continue">
-                <router-link :to="{path: '/novel/' + novel.id + '/chapter/' + chapterNum}">
-                    点击这里继续阅读...
-                </router-link>
+            <div v-if="chapterNum > 0" class="continue" @click="clickChapter(novel.id, chapterNum)">
+                点击这里继续阅读...
             </div>
             <div class="sort" @click.stop="sort">
                 <i class="iconfont book-sort"></i> 倒序
@@ -59,16 +57,19 @@
                 if(chapterNum){
                     this.chapterNum = parseInt(chapterNum);
                 }
-                // var pageNum = bookApi.getSetting("pageNum", novelId)
-                // if(pageNum){
-                //     this.pageNum = parseInt(pageNum)
-                // }
+
+                // 增加百度统计代码
+                var pre = process.env.VUE_APP_BASE_URL ? process.env.VUE_APP_BASE_URL : "";
+                this.$ba.trackPageview(pre + "/novel/" + novelId)
             }
         },
         mounted() {
-
         },
         methods: {
+            clickChapter(novelId, chapterNum){
+                var chapterURL = "/novel/" + novelId + "/chapter/" + chapterNum;
+                this.$router.push(chapterURL)
+            },
             sort(){
                 if(this.novel && this.novel.chapters){
                     this.novel.chapters.reverse();

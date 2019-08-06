@@ -18,11 +18,9 @@ var api = {
             return localStorage.getItem(key)
         }
     },
-    getNovels(pageNum, searchTxt, showAll){
-
-        var urlParam = showAll ? "?show=all" : "";
+    getNovels(pageNum, searchTxt){
         return base({
-            url: config.url.book + "api/novels/" + pageNum + urlParam,
+            url: config.url.book + "api/novels/" + pageNum,
             method: "post",
             data:{
                 searchTxt

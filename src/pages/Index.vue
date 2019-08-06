@@ -58,23 +58,24 @@
             }
         },
         created(){
-            var show = this.$route.query.show;
-
-            bookApi.getNovels(1, null, show).then(v =>{
+            bookApi.getNovels(1, null).then(v =>{
                 this.novelList = v;
             })
         },
         mounted() {
-
+            // 增加百度统计代码
+            var pre = process.env.VUE_APP_BASE_URL ? process.env.VUE_APP_BASE_URL : "";
+            this.$ba.trackPageview(pre + "/")
         },
         methods: {
             clickNovel(novelId){
                 let chapterNum = bookApi.getSetting("chapterNum", novelId)
+
+                var chapterURL = "/novel/" + novelId;
                 if(chapterNum){
-                    this.$router.push("/novel/" + novelId + "/chapter/" + chapterNum)
-                }else{
-                    this.$router.push("/novel/" + novelId)
+                    chapterURL += "/chapter/" + chapterNum;
                 }
+                this.$router.push(chapterURL)
             }
         }
     }
