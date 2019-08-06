@@ -20,7 +20,7 @@
                                 <div class="title">
                                     {{item.title}} <i v-if="isUpdated(item.id, item.latestChapterNum)" class="iconfont book-xin new"></i>
                                 </div>
-                                <div class="author"> {{item.author}} </div>
+                                <div class="author"> {{item.author}} {{unread(item.id, item.latestChapterNum)}} </div>
                                 <div class="intro"> {{item.intro}} </div>
                             </a>
                         </div>
@@ -68,6 +68,18 @@
             this.$ba.trackPageview(pre + "/")
         },
         methods: {
+            unread(novelId, lastest){
+                let chapterNum = bookApi.getSetting("chapterNum", novelId)
+                if(!chapterNum) return ' - 未读过';
+
+                var unreadCount = lastest - chapterNum;
+
+                if(unreadCount == 0) return "";
+
+
+                return " - " + (unreadCount) + "章未读";
+
+            },
             isUpdated(novelId, lastest){
                 let chapterNum = bookApi.getSetting("chapterNum", novelId)
                 if(!chapterNum || !lastest) return false;
@@ -158,7 +170,7 @@
 
             .author{
                 font-size: 14px;
-                color: #555;
+                color: #888;
                 margin-top:5px;
             }
 

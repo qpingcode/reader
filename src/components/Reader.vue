@@ -31,8 +31,8 @@
             <div class="article-content" v-html="content"></div>
 
             <div class="row">
-                <div class="btn font-btn" @click="clickChapterGo(-1)">上一章</div>
-                <div class="btn font-btn" @click="clickChapterGo(1)">下一章</div>
+                <div class="btn font-btn" :class="prev ? '': 'disabled'" @click="clickChapterGo(-1)">上一章</div>
+                <div class="btn font-btn" :class="next ? '': 'disabled'" @click="clickChapterGo(1)">下一章</div>
             </div>
         </article>
 
@@ -43,7 +43,7 @@
 <script>
     export default {
         name: 'Reader',
-        props: ['turnToLastPage', 'turnDirection', 'turnMode', 'pageNum', 'title', 'content', 'fontSize', 'lineHeight'],
+        props: ['turnToLastPage', 'turnDirection', 'turnMode', 'pageNum', 'title', 'content', 'fontSize', 'lineHeight', 'next', 'prev'],
         data() {
             return {
                 clientHeight: null,
@@ -218,6 +218,17 @@
                 border: 1px solid #333;
                 height:40px;
                 line-height:40px;
+                &.disabled{
+                    border: 1px solid #bbb;
+                    color: #bbb;
+                }
+                .color-dark &{
+                    border: 1px solid #bbb;
+                }
+                .color-dark &.disabled{
+                    border: 1px solid #888;
+                    color: #888;
+                }
             }
             .font-btn{
                 width:35%;

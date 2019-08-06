@@ -12,6 +12,8 @@
                 :line-height="lineHeight"
                 :font-size="fontSize"
                 :turn-to-last-page="turnToLastPage"
+                :next="next"
+                :prev="prev"
 
                 v-swipeleft="(e)=>vueTouch('left',e)"
                 v-swiperight="(e)=>vueTouch('right',e)"
@@ -31,6 +33,9 @@
         <toolbar v-if="showToolbar"
                  :themeCss="themeCss"
                  :turnMode="turnMode"
+                 :next="next"
+                 :prev="prev"
+
                  @callback="callback"
         ></toolbar>
 

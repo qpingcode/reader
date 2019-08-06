@@ -12,8 +12,8 @@
                 <div class="options">
                     <div v-show="tab == 'default'" class="option">
                         <div class="row flex">
-                            <div class="btn font-btn" @click="clickChapterGo(-1)">上一章</div>
-                            <div class="btn font-btn" @click="clickChapterGo(1)">下一章</div>
+                            <div class="btn font-btn" :class="prev ? '': 'disabled'" @click="clickChapterGo(-1)">上一章</div>
+                            <div class="btn font-btn" :class="next ? '': 'disabled'" @click="clickChapterGo(1)">下一章</div>
                         </div>
                     </div>
                     <div v-show="tab == 'setting'" class="option">
@@ -74,7 +74,7 @@
 <script>
     export default {
         name: 'Reader',
-        props: ['themeCss', 'turnMode'],
+        props: ['themeCss', 'turnMode', 'prev', 'next'],
         data(){
             return {
                 tab : "default",
@@ -240,6 +240,19 @@
                 border: 1px solid #333;
                 height:40px;
                 line-height:40px;
+
+                &.disabled{
+                    border: 1px solid #bbb;
+                    color: #bbb;
+                }
+                .color-dark &{
+                    border: 1px solid #bbb;
+                }
+                .color-dark &.disabled{
+                    border: 1px solid #888;
+                    color: #888;
+                }
+
             }
             .font-btn{
                 width:40%;
