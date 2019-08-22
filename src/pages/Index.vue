@@ -8,7 +8,7 @@
         <div class="site-center-wrappter">
             <div v-if="searchEnable" class="search">
                 <input class="txt" name="searchTxt" v-model="searchTxt" placeholder="请输入想搜索的小说标题">
-                <input class="btn" type="button" value="搜索" @click="goSearch"/>
+                <div class="btn" @click="goSearch">搜索</div>
             </div>
 
             <div class="novel-list">
@@ -139,8 +139,18 @@
 
             .txt{
                 width:200px;
+                vertical-align: middle;
             }
             .btn{
+                vertical-align: middle;
+                border-radius:4px;
+                margin-left:10px;
+                display: inline-block;
+                border: 1px solid #dcdfe6;
+                background: white;
+                text-align: center;
+                height:30px;
+                line-height: 30px;
                 width:80px;
             }
 
