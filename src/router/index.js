@@ -7,6 +7,7 @@ Vue.use(Router)
 const Index = () => import('@/pages/Index.vue')
 const Chapter = () => import('@/pages/Chapter.vue')
 const Novel = () => import('@/pages/Novel.vue')
+const Search = () => import('@/pages/Search.vue')
 
 export default new Router({
     mode: 'history',
@@ -16,6 +17,11 @@ export default new Router({
             path: '/',
             name: 'Index',
             component: Index
+        },
+        {
+            path: '/search',
+            name: 'Search',
+            component: Search
         },
         {
             path: '/novel/:novelId',

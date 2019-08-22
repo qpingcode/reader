@@ -23,13 +23,6 @@
                 @callback="callback"
         ></reader>
 
-        <!--<div v-if="turnMode" class="book-btn left" @click="pageGo(-1)">-->
-            <!--<i class="iconfont book-prev"></i>-->
-        <!--</div>-->
-        <!--<div v-if="turnMode" class="book-btn right" @click="pageGo(1)">-->
-            <!--<i class="iconfont book-next"></i>-->
-        <!--</div>-->
-
         <toolbar v-if="showToolbar"
                  :themeCss="themeCss"
                  :turnMode="turnMode"

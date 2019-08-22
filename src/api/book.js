@@ -18,13 +18,28 @@ var api = {
             return localStorage.getItem(key)
         }
     },
-    getNovels(pageNum, searchTxt){
+    search(searchTxt, pageNum){
+        return base({
+            url: config.url.book + "api/spider/search/" + searchTxt + "/" + pageNum,
+            method: "get",
+        })
+    },
+    index(spiderId){
+        return base({
+            url: config.url.book + "api/spider/index/" + spiderId,
+            method: "get",
+        })
+    },
+    update(novelId){
+        return base({
+            url: config.url.book + "api/spider/update/" + novelId,
+            method: "get",
+        })
+    },
+    getNovels(pageNum){
         return base({
             url: config.url.book + "api/novels/" + pageNum,
-            method: "post",
-            data:{
-                searchTxt
-            }
+            method: "post"
         })
     },
     getNovel(novelId){
