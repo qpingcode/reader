@@ -1,11 +1,11 @@
 <template>
-    <div class="site-index site-background">
+    <div class="site-search site-background">
         <SiteHeader></SiteHeader>
 
         <div class="site-center-wrappter">
             <div class="search">
                 <input class="txt" name="searchTxt" v-model="searchTxt" placeholder="请输入想搜索的小说标题">
-                <input class="btn" type="button" value="搜索" @click="search"/>
+                <input class="btn" type="button" value="搜索" @click="search(1)"/>
             </div>
 
             <div class="novel-list">
@@ -31,7 +31,7 @@
                 <ul>
                     <li v-bind:key="page" v-for="page in pager.pageNumList">
                         <a v-if="page == pageNum" class="active" href="javascript:void(0)">{{page}}</a>
-                        <a v-else @click="goPage(page)">{{page}}</a>
+                        <a v-else @click="search(page)">{{page}}</a>
                     </li>
                 </ul>
             </div>
@@ -43,7 +43,6 @@
 
 <script>
     import bookApi from '../api/book.js'
-    import Loading from '../components/Loading.vue'
     import SiteHeader from '../components/SiteHeader.vue'
 
     export default {
@@ -65,17 +64,12 @@
             this.pageNum = this.$route.query.pageNum;
 
             if(this.searchTxt){
-                this.search();
+                this.search(this.pageNum);
             }
         },
         methods: {
-            goPage(pageNum){
-                this.searchTxt = this.searchTxt;
-                this.pageNum = pageNum;
-                this.search()
-            },
-            search(){
-                bookApi.search(this.searchTxt, this.pageNum).then(v => {
+            search(pageNum){
+                bookApi.search(this.searchTxt, pageNum).then(v => {
 
                     if(v.code != 1){
                         alert(v.msg);
@@ -83,7 +77,6 @@
                     }
                     this.novelList = v.data.pageData.rows
                     this.totalSize = v.data.totalSize
-                    this.pageNum = v.data.pager.pageNum
                     this.pager = v.data.pager
 
                     scrollTo(0,0)
@@ -106,7 +99,7 @@
 </script>
 
 <style lang="scss">
-    .site-index {
+    .site-search {
 
         a {
             text-decoration: none;

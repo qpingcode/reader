@@ -7,10 +7,8 @@
 
         <div class="site-center-wrappter">
             <div v-if="searchEnable" class="search">
-                <form id="form" action="/index" method="get">
-                    <input class="txt" name="searchTxt" v-model="searchTxt" placeholder="请输入想搜索的小说标题">
-                    <input class="btn" type="button" value="搜索" @click="search"/>
-                </form>
+                <input class="txt" name="searchTxt" v-model="searchTxt" placeholder="请输入想搜索的小说标题">
+                <input class="btn" type="button" value="搜索" @click="goSearch"/>
             </div>
 
             <div class="novel-list">
@@ -71,7 +69,7 @@
             this.$ba.trackPageview(pre + "/")
         },
         methods: {
-            search(){
+            goSearch(){
                 this.$router.push({path: "/search", query:{searchTxt: this.searchTxt, pageNum : 1}})
             },
             unread(novelId, lastest){
