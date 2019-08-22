@@ -69,6 +69,8 @@
         },
         methods: {
             search(pageNum){
+                this.pageNum = pageNum;
+
                 bookApi.search(this.searchTxt, pageNum).then(v => {
 
                     if(v.code != 1){
@@ -134,7 +136,7 @@
             }
 
             .txt{
-                width:300px;
+                width:200px;
             }
             .btn{
                 width:80px;
