@@ -28,14 +28,15 @@
                 </ul>
             </div>
 
-            <!--<div class="page">-->
-                <!--<ul>-->
-                    <!--<li>-->
-                        <!--<a class="active" href="/index?page=${pageNo}">${pageNo}</a>-->
-                        <!--<a href="/index?page=${pageNo}&searchTxt=${searchTxt!''}">${pageNo}</a>-->
-                    <!--</li>-->
-                <!--</ul>-->
-            <!--</div>-->
+            <div class="page" v-if="pager">
+                <ul>
+                    <li v-bind:key="page" v-for="page in pager.pageNumList">
+                        <a v-if="page == pageNum" class="active" href="javascript:void(0)">{{page}}</a>
+                        <a v-else @click="init(page)">{{page}}</a>
+                    </li>
+                    <li> 共 {{totalSize}} 条记录</li>
+                </ul>
+            </div>
         </div>
 
 
@@ -55,13 +56,14 @@
                 loading: false,
                 searchEnable: true,
                 searchTxt: '',
-                novelList: []
+                novelList: [],
+                totalSize: 0,
+                pageNum: 1,
+                pager: null,
             }
         },
         created(){
-            bookApi.getNovels(1).then(v =>{
-                this.novelList = v.rows;
-            })
+            this.init(1)
         },
         mounted() {
             // 增加百度统计代码
@@ -69,6 +71,23 @@
             this.$ba.trackPageview(pre + "/")
         },
         methods: {
+            init(page){
+                
+                this.pageNum = page
+
+                bookApi.getNovels(page).then(v =>{
+                    if(v.code != 1){
+                        alert(v.msg);
+                        return;
+                    }
+
+                    this.novelList = v.data.pageData.rows
+                    this.totalSize = v.data.pageData.total
+                    this.pager = v.data.pager
+
+                    scrollTo(0,0)
+                })
+            },
             goSearch(){
                 this.$router.push({path: "/search", query:{searchTxt: this.searchTxt, pageNum : 1}})
             },
@@ -171,8 +190,6 @@
 
         .novel-list{
 
-            min-height: 100vh;
-
             li{
                 margin-top:20px;
                 margin-right:20px;
@@ -226,11 +243,12 @@
         }
 
         .page{
-            padding: 20px;
+            padding: 30px 10px;
         }
 
         .page li{
             display: inline-block;
+            margin-left:10px;
         }
 
         .page li a{

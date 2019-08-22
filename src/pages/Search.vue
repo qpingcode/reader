@@ -33,6 +33,7 @@
                         <a v-if="page == pageNum" class="active" href="javascript:void(0)">{{page}}</a>
                         <a v-else @click="search(page)">{{page}}</a>
                     </li>
+                    <li> 共 {{totalSize}} 条记录</li>
                 </ul>
             </div>
         </div>
@@ -78,7 +79,7 @@
                         return;
                     }
                     this.novelList = v.data.pageData.rows
-                    this.totalSize = v.data.totalSize
+                    this.totalSize = v.data.pageData.total
                     this.pager = v.data.pager
 
                     scrollTo(0,0)
