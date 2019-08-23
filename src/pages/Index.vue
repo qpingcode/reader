@@ -72,7 +72,7 @@
         },
         methods: {
             init(page){
-                
+
                 this.pageNum = page
 
                 bookApi.getNovels(page).then(v =>{
