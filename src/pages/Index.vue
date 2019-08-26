@@ -7,7 +7,7 @@
 
         <div class="site-center-wrappter">
             <div v-if="searchEnable" class="search">
-                <input class="txt" name="searchTxt" v-model="searchTxt" placeholder="请输入想搜索的小说标题">
+                <input class="txt" name="searchTxt" v-model="searchTxt" placeholder="当前小说库中共 100609 本书">
                 <div class="btn" @click="goSearch">搜索</div>
             </div>
 
